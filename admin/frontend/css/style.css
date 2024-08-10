@@ -1,0 +1,265 @@
+/* Color Variables */
+:root {
+    --primary: #2DCC70;
+    --body: #2B3A4F;
+    --grey: #92A1A2;
+    --grey-light: #ECF0F1;
+    --blue: #59A4E8;
+    --orange: #e58039;
+    --purple: #8F40B3;
+    --night-blue: #34495E;
+    --night-blue-dark: #233342;
+}
+
+body {
+    background-color: var(--grey-light);
+}
+
+aside {
+    background-color: var(--night-blue);
+    height: 100vh;
+    position: fixed;
+    width: 100%;
+    max-width: 250px;
+}
+
+aside header {
+    background-color: var(--orange);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
+
+aside header img {
+    border-radius: 50%;
+    height: 55px;
+    width: 55px;
+}
+
+aside header p {
+    color: #fff;
+    margin-left: 15px;
+    font-size: 18px;
+}
+
+.side-navigation {
+    padding-top: 30px;
+}
+
+.side-navigation ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.side-navigation ul li {
+    margin: 0;
+}
+
+.side-navigation ul li a {
+    color: var(--grey-light);
+    display: block;
+    padding: 15px 20px;
+    text-decoration: none;
+}
+
+.side-navigation ul li a:hover,
+.side-navigation ul li.active a {
+    background-color: var(--night-blue-dark);
+    color: var(--primary);
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.main-head {
+    background: var(--grey-light);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    height: 60px;
+    padding: 0 20px;
+    position: relative;
+}
+
+.main-head .icons i {
+    margin-right: 15px;
+}
+
+.main-head .search input {
+    border: 1px solid var(--grey);
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.user-card {
+    background: var(--grey-light);
+    border-radius: 10px;
+    display: flex;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.user-card .user-picture {
+    border-radius: 50%;
+    height: 90px;
+    width: 90px;
+}
+
+.user-card .user-info {
+    margin-left: 20px;
+}
+
+.user-card .name {
+    font-size: 18px;
+    color: var(--body);
+}
+
+.user-card .user-role {
+    font-size: 14px;
+    color: var(--grey);
+}
+
+.user-card .experience-points i {
+    color: var(--primary);
+}
+
+.action-links {
+    margin-top: 15px;
+}
+
+.action-links a {
+    margin-right: 10px;
+}
+
+.tab-content {
+    margin-top: 20px;
+}
+
+.tab-content .list-group-item {
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.show-more {
+    cursor: pointer;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+thead {
+    background-color: var(--primary_lite);
+}
+th, td {
+    padding: 1rem;
+    text-align: center;
+}
+th {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+tbody tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+td img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+td:last-child {
+    text-align: center;
+}
+td:last-child:hover a {
+    color: var(--black);
+}
+
+/* Icons and Progress Bar */
+.fa-arrow-up {
+    color: var(--green);
+}
+.fa-arrow-down {
+    color: var(--red);
+}
+.fa-mars {
+    color: var(--blue);
+}
+.fa-venus {
+    color: var(--pink);
+}
+.progress {
+    display: inline-block;
+    background-color: var(--lite);
+    border-radius: 20px;
+    width: 60px;
+    height: 12px;
+    position: relative;
+    overflow: hidden;
+}
+.progress em {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: var(--primary);
+    transition: width 0.3s ease;
+}
+.active, .inactive {
+    padding: 0 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+}
+.active {
+    background-color: #de743a;
+
+    color: var(--primary);
+}
+.inactive {
+    background-color: #fff0ee;
+    color: var(--red);
+}
+
+/* Responsive Design */
+@media (max-width: 720px) {
+    table {
+        background-color: transparent;
+    }
+    table thead {
+        display: none;
+    }
+    table td {
+        display: block;
+        text-align: right;
+        padding: 0.5rem 1rem;
+    }
+    table td:before {
+        content: attr(data-label);
+        float: left;
+        color: var(--black);
+        font-weight: bold;
+    }
+    tr {
+        display: block;
+        margin: 0.5rem 0;
+        border-radius: 5px;
+    }
+    tr td:last-child:hover:after {
+        left: auto;
+        right: 10%;
+        transform: translate(50%, 50%);
+    }
+}  
