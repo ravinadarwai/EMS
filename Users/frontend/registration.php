@@ -2,8 +2,6 @@
 session_start();
 ?>
 
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -12,6 +10,9 @@ session_start();
     <title>Personal Information Form</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        * {
+            font-family: 'Gilroy';
+        }
         body {
             background-color: lightgrey;
         }
@@ -43,10 +44,9 @@ session_start();
         }
     </style>
 </head>
-
 <body>
     <div class="container py-5">
-    <?php if (!empty($_SESSION['error'])): ?>
+        <?php if (!empty($_SESSION['error'])): ?>
             <div class="alert alert-danger"><?php echo $_SESSION['error']; ?></div>
             <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
@@ -120,6 +120,15 @@ session_start();
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-outline">
+                            <input type="text" id="jobProfile" name="job_profile" class="form-control" required />
+                            <label class="form-label" for="jobProfile">Job Profile</label>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Aadhaar Image Upload -->
                 <div class="file-upload-section mb-3">
                     <label for="aadhaarImage">Upload Aadhaar Image</label>
@@ -142,8 +151,8 @@ session_start();
 
                 <!-- User Photo Upload -->
                 <div class="file-upload-section mb-3">
-                    <label for="userPhoto">Upload User Photo</label>
-                    <input type="file" id="userPhoto" name="user_photo" class="form-control" onchange="showPreview(this, '#userPhotoPreview')" required />
+                    <label for="userPhoto">Upload Photo</label>
+                    <input type="file" id="userPhoto" name="user_photo" class="form-control" onchange="showPreview(this, '#userPhotoPreview')" />
                     <img id="userPhotoPreview" src="#" alt="User Photo Preview" style="display: none;">
                 </div>
 

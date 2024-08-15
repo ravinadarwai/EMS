@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin_email'])) {
 include '../../config.php';
 
 // Fetch data from the database
-$queryPersonalInfo = "SELECT * FROM personal_info";
+$queryPersonalInfo = "SELECT * FROM users";
 $resultPersonalInfo = mysqli_query($conn, $queryPersonalInfo);
 
 // Fetch employee data from the database
@@ -16,7 +16,7 @@ $queryEmployee = "SELECT * FROM employee";
 $resultEmployee = mysqli_query($conn, $queryEmployee);
 ?>
 
-<!doctype html>0
+<!doctype html>
 <html lang="en"> 
 <head>
     <meta charset="utf-8">
@@ -67,6 +67,8 @@ $resultEmployee = mysqli_query($conn, $queryEmployee);
                                 <th>CV</th>
                                 <th>User Photo</th>
                                 <th>Created At</th>
+                                <th>Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -84,22 +86,22 @@ $resultEmployee = mysqli_query($conn, $queryEmployee);
                                     <td><?php echo htmlspecialchars($row['zip_code']); ?></td>
                                     <td>
                                         <?php if ($row['aadhaar_image']): ?>
-                                            <img src="../../<?php echo htmlspecialchars($row['aadhaar_image']); ?>" alt="Aadhaar Image" width="100"/>
+                                            <img src="../../Users/uploads/aadhaar/<?php echo htmlspecialchars($row['aadhaar_image']); ?>" alt="Aadhaar Image" width="100"/>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($row['pan_image']): ?>
-                                            <img src="../../<?php echo htmlspecialchars($row['pan_image']); ?>" alt="Pan Image" width="100"/>
+                                            <img src="../../Users/uploads/pan/<?php echo htmlspecialchars($row['pan_image']); ?>" alt="Pan Image" width="100"/>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($row['cv']): ?>
-                                            <a href="../../<?php echo htmlspecialchars($row['cv']); ?>" target="_blank">View CV</a>
+                                            <a href="../../Users/uploads/cv/<?php echo htmlspecialchars($row['cv']); ?>" target="_blank">View CV</a>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($row['user_photo']): ?>
-                                            <img src="../../<?php echo htmlspecialchars($row['user_photo']); ?>" alt="User Photo" width="100"/>
+                                            <img src="../../Users/uploads/photos/<?php echo htmlspecialchars($row['user_photo']); ?>" alt="User Photo" width="100"/>
                                         <?php endif; ?>
                                     </td>
                                     <td>
@@ -115,6 +117,11 @@ $resultEmployee = mysqli_query($conn, $queryEmployee);
     }
     ?>
 </td>
+<td>
+                                        <a href="taskdata?employee_id=<?php echo $row['employee_id']; ?>" class="btn btn-success btn-sm" >Show</a>
+                                        <a href="action/update.php?employee_id=<?php echo $row['employee_id']; ?>" class="btn btn-warning btn-sm">Update</a>
+                                        <a href="action/delete.php?employee_id=<?php echo $row['employee_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+                                    </td>
                                    
                                 </tr>
                             <?php endwhile; ?>
@@ -158,22 +165,22 @@ $resultEmployee = mysqli_query($conn, $queryEmployee);
                                     <td><?php echo htmlspecialchars($row['zip_code']); ?></td>
                                     <td>
                                         <?php if ($row['aadhaar_image']): ?>
-                                            <img src="../../<?php echo htmlspecialchars($row['aadhaar_image']); ?>" alt="Aadhaar Image" width="100"/>
+                                            <img src="../../Users/uploads/aadhaar/<?php echo htmlspecialchars($row['aadhaar_image']); ?>" alt="Aadhaar Image" width="100"/>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($row['pan_image']): ?>
-                                            <img src="../../<?php echo htmlspecialchars($row['pan_image']); ?>" alt="Pan Image" width="100"/>
+                                            <img src="../../Users/uploads/pan/<?php echo htmlspecialchars($row['pan_image']); ?>" alt="Pan Image" width="100"/>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($row['cv']): ?>
-                                            <a href="../../<?php echo htmlspecialchars($row['cv']); ?>" target="_blank">View CV</a>
+                                            <a href="../../Users/uploads/cv/<?php echo htmlspecialchars($row['cv']); ?>" target="_blank">View CV</a>
                                         <?php endif; ?>
                                     </td>
                                     <td>
                                         <?php if ($row['user_photo']): ?>
-                                            <img src="../../<?php echo htmlspecialchars($row['user_photo']); ?>" alt="User Photo" width="100"/>
+                                            <img src="../../Users/uploads/photos/<?php echo htmlspecialchars($row['user_photo']); ?>" alt="User Photo" width="100"/>
                                         <?php endif; ?>
                                     </td>
                                     <td>
@@ -190,9 +197,9 @@ $resultEmployee = mysqli_query($conn, $queryEmployee);
     ?>
 </td>
                                     <td>
-                                        <a href="action/verify.php?id=<?php echo $row['id']; ?>" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want to verify this record?');">Verify</a>
-                                        <a href="action/update.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Update</a>
-                                        <a href="action/delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+                                        <a href="action/verify.php?employee_id=<?php echo $row['employee_id']; ?>" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want to verify this record?');">Verify</a>
+                                        <a href="action/update.php?employee_id=<?php echo $row['employee_id']; ?>" class="btn btn-warning btn-sm">Update</a>
+                                        <a href="action/delete.php?employee_id=<?php echo $row['employee_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>

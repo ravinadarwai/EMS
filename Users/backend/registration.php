@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 
 // Include config file
 include '../../config.php';
+include 'functions.php'; // Include the file with the uploadFile function
 session_start(); // Start session for storing messages
 
 // Initialize message variables
@@ -21,81 +22,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $permanent_address = $_POST['permanent_address'];
     $family_number = $_POST['family_number'];
     $zip_code = $_POST['zip_code'];
+    $job_profile = $_POST['job_profile'];
 
     // File uploads
     $aadhaar_image = uploadFile('aadhaar_image', 'aadhaar');
     $pan_image = uploadFile('pan_image', 'pan');
     $cv = uploadFile('cv', 'cv');
-    $user_photo = uploadFile('user_photo', 'photos');
+    $user_photo = uploadFile('user_photo', 'photo');
 
-    if ($aadhaar_image === "Error" || $pan_image === "Error" || $cv === "Error" || $user_photo === "Error") {
-        $_SESSION['error'] = "Error uploading one or more files.";
-        header("Location: registration.html"); // Redirect back to registration page
-        exit();
+    if (!$aadhaar_image || !$pan_image || !$cv || ($user_photo === false && $_FILES['user_photo']['error'] != 4)) {
+        $_SESSION['error'] = 'Error uploading files.';
+        header("Location: ../frontend/users.php");
+        exit;
     }
 
-    // Insert data into the database
-    $sql = "INSERT INTO personal_info (first_name, last_name, email, password, local_address, permanent_address, family_number, zip_code, aadhaar_image, pan_image, cv, user_photo)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssssssss", $first_name, $last_name, $email, $password, $local_address, $permanent_address, $family_number, $zip_code, $aadhaar_image, $pan_image, $cv, $user_photo);
+    // Prepare SQL insert statement
+    $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, password, local_address, permanent_address, family_number, zip_code, job_profile, aadhaar_image, pan_image, cv, user_photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssssss", $first_name, $last_name, $email, $password, $local_address, $permanent_address, $family_number, $zip_code, $job_profile, $aadhaar_image, $pan_image, $cv, $user_photo);
 
     if ($stmt->execute()) {
-        $_SESSION['message'] = "Personal information saved successfully.";
-        header("Location: home.php"); // Redirect to home page
+        $_SESSION['message'] = 'Data submitted successfully!';
     } else {
-        $_SESSION['error'] = "Database Error: " . $stmt->error;
-        header("Location: ../frontend/registration.php"); // Redirect back to registration page
+        $_SESSION['error'] = 'Error: ' . $stmt->error;
     }
 
     $stmt->close();
     $conn->close();
+    header("Location: ../frontend/personal_info_form.php");
+    exit;
 }
 
-// Function to handle file uploads
-function uploadFile($inputName, $folder) {
-    if (isset($_FILES[$inputName]) && $_FILES[$inputName]['error'] == 0) {
-        $file = $_FILES[$inputName];
-        $targetDir = "uploads/" . $folder . "/";
-        $targetFile = $targetDir . basename($file["name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-        // Check if file is a real image (for images)
-        if ($folder == 'aadhaar' || $folder == 'pan' || $folder == 'photos') {
-            $check = getimagesize($file["tmp_name"]);
-            if ($check === false) {
-                $uploadOk = 0;
-            }
+
+function uploadFile($inputName, $type) {
+    $allowedTypes = [
+        'aadhaar' => ['image/jpeg', 'image/png'],
+        'pan' => ['image/jpeg', 'image/png'],
+        'cv' => ['application/pdf'],
+        'photo' => ['image/jpeg', 'image/png']
+    ];
+
+    if (!isset($_FILES[$inputName])) return false;
+
+    $file = $_FILES[$inputName];
+    $fileType = $file['type'];
+    $fileTmpName = $file['tmp_name'];
+
+    if ($file['error'] === UPLOAD_ERR_OK) {
+        if (!in_array($fileType, $allowedTypes[$type])) {
+            return false;
         }
 
-        // Allow certain file formats
-        if ($folder == 'cv') {
-            if ($imageFileType != "pdf") {
-                $uploadOk = 0;
-            }
-        } else if ($folder == 'photos') {
-            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                $uploadOk = 0;
-            }
-        } else {
-            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                $uploadOk = 0;
-            }
+        $uploadDir = '../uploads/' . $type . '/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
         }
 
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            return "Error";
-        } else {
-            if (move_uploaded_file($file["tmp_name"], $targetFile)) {
-                return $targetFile;
-            } else {
-                return "Error";
-            }
+        $fileName = basename($file['name']);
+        $filePath = $uploadDir . $fileName;
+
+        if (move_uploaded_file($fileTmpName, $filePath)) {
+            return $fileName;
         }
     }
-    return "Error";
+
+    return false;
 }
 ?>
+

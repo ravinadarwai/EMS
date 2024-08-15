@@ -19,11 +19,12 @@ if (isset($_GET['id'])) {
     $record = $result->fetch_assoc();
 
     if ($record) {
-        // Prepare to insert data into employee table
-        $query = "INSERT INTO employee (first_name, last_name, email, local_address, permanent_address, family_number, zip_code, aadhaar_image, pan_image, cv, user_photo, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Prepare to insert data into employee table, including employee_id
+        $query = "INSERT INTO employee (employee_id, first_name, last_name, email, local_address, permanent_address, family_number, zip_code, aadhaar_image, pan_image, cv, user_photo, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param(
-            "ssssssssssss",
+            "issssssssssss",
+            $record['employee_id'],
             $record['first_name'],
             $record['last_name'],
             $record['email'],
