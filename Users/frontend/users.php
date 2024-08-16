@@ -110,7 +110,8 @@ unset($_SESSION['data_submitted']); // Clear the session variable after showing 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Gilroy', sans-serif;
@@ -139,6 +140,7 @@ unset($_SESSION['data_submitted']); // Clear the session variable after showing 
         #other_project {
             display: none;
         }
+        
     </style>
     <script>
         function toggleOtherProjectField() {
@@ -200,11 +202,14 @@ unset($_SESSION['data_submitted']); // Clear the session variable after showing 
     <div class="card">
         <div class="card-header">
             Project Submission Form
+            <a href="../backend/logout.php" class="btn btn-danger" style="float:right; width:100px"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            <a href="../frontend/show_user.php" class="btn btn-success  mx-2" style="float:right; width:100px"><i class="fa-solid fa-eye"></i></a>
+
+
         </div>
         <div class="card-body">
             <h5 class="card-title">Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?> <?php echo htmlspecialchars($_SESSION['last_name']); ?>!</h5>
-            <p>Your email is: <?php echo htmlspecialchars($_SESSION['email']); ?></p>
-            <a href="../backend/logout.php" class="btn btn-danger mb-4">Logout</a>
+            <!-- <p>Your email is: <?php echo htmlspecialchars($_SESSION['email']); ?></p> -->
 
             <form method="POST" action="">
                 <div class="row mb-3">

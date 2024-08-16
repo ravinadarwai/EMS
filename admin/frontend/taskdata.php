@@ -134,7 +134,7 @@ $conn->close();
             <div class="form-group col-md-4">
                 <label for="aadhaar_image">Aadhaar Image</label><br>
                 <?php if ($employee_data['aadhaar_image']): ?>
-                    <img src="../../Users/uploads/aadhaar/<?php echo htmlspecialchars($employee_data['aadhaar_image']); ?>" alt="Aadhaar Image" class="img-fluid">
+                    <a href="../../Users/uploads/aadhaar/<?php echo htmlspecialchars($employee_data['aadhaar_image']); ?>" >View Aadhaar</a>
                 <?php else: ?>
                     <p>No image available</p>
                 <?php endif; ?>
@@ -142,7 +142,7 @@ $conn->close();
             <div class="form-group col-md-4">
                 <label for="pan_image">Pan Image</label><br>
                 <?php if ($employee_data['pan_image']): ?>
-                    <img src="../../Users/uploads/pan/<?php echo htmlspecialchars($employee_data['pan_image']); ?>" alt="Pan Image" class="img-fluid">
+                    <a href="../../Users/uploads/pan/<?php echo htmlspecialchars($employee_data['pan_image']); ?>" >View Pan</a>
                 <?php else: ?>
                     <p>No image available</p>
                 <?php endif; ?>
@@ -170,7 +170,7 @@ $conn->close();
             </div>
             <div class="form-group col-md-6">
                 <label for="created_at">Created At</label>
-                <input type="text" class="form-control" id="created_at" value="<?php echo !empty($employee_data['created_at']) ? (new DateTime($employee_data['created_at']))->format('d-m-y H:i:s') : 'N/A'; ?>" readonly>
+                <input type="text" class="form-control" id="created_at" value="<?php echo !empty($employee_data['created_at']) ? (new DateTime($employee_data['created_at']))->format('d-m-y'    ) : 'N/A'; ?>" readonly>
             </div>
         </div>
     </div>
@@ -181,18 +181,19 @@ $conn->close();
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
+                <th>Date and Time</th>
                     <th>Project</th>
                     <th>Duration (Hours)</th>
-                    <th>Date and Time</th>
                     <th>Comment</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($report_data as $data): ?>
                     <tr>
+                    <td><?php echo htmlspecialchars($data['datetime']) ? (new DateTime($data['datetime']))->format('d-m-y') :'N/A'; ?></td>
+
                         <td><?php echo htmlspecialchars($data['project_name']); ?></td>
                         <td><?php echo htmlspecialchars($data['time_duration']); ?></td>
-                        <td><?php echo htmlspecialchars($data['datetime']); ?></td>
                         <td><?php echo htmlspecialchars($data['comment']); ?></td>
                     </tr>
                 <?php endforeach; ?>

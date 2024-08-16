@@ -36,7 +36,7 @@
         }
         .login input[type="email"],
         .login input[type="password"] {
-            width: 100%;
+            width: 94%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;

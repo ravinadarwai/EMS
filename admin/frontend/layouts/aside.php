@@ -5,11 +5,10 @@
             </header>
             <nav class="side-navigation">
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Comments</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Stats</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="add_project">Add Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="show_all_project">Show All Project</a></li>
+            
                 </ul>
             </nav>
         </aside>
